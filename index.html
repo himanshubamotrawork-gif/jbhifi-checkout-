@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JB Hi-Fi Checkout</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #ffffff;
+            color: #000000;
+        }
+        .jb-yellow {
+            background-color: #ffed00;
+        }
+    </style>
+</head>
+<body class="max-w-md mx-auto min-h-screen bg-white pb-12 antialiased selection:bg-yellow-200 shadow-2xl">
+
+    <!-- BRAND HEADER -->
+    <header class="jb-yellow py-4 flex flex-col items-center justify-center border-b border-gray-200">
+        <h1 class="text-3xl font-black tracking-tighter text-black uppercase italic">JB HI-FI</h1>
+    </header>
+
+    <!-- CONTENT WRAPPER -->
+    <div class="px-4 pt-4 space-y-6">
+
+        <!-- ORDER SUMMARY TOGGLE HEADER -->
+        <div class="flex justify-between items-center py-1">
+            <button class="flex items-center gap-1.5 text-[15px] font-medium text-gray-800 focus:outline-none">
+                Order summary <i class="fa-solid fa-chevron-up text-xs pt-0.5"></i>
+            </button>
+            <span class="text-lg font-bold text-gray-900">$549.00</span>
+        </div>
+
+        <!-- PRODUCT ROW -->
+        <div class="flex items-start justify-between gap-4 py-2 border-t border-gray-100">
+            <div class="flex items-start gap-3">
+                <!-- Clean product image wrapper configured for prod-1.jpg -->
+                <div class="relative w-16 h-16 bg-white border border-gray-200 rounded p-1 flex-shrink-0 flex items-center justify-center overflow-hidden">
+                    <img src="prod-1.jpg" alt="Apple Watch" class="max-h-full max-w-full object-contain">
+                </div>
+                <div class="text-[13.5px] leading-tight text-gray-900 font-normal">
+                    Apple Watch Series 11 46mm Jet Black Aluminium Case GPS Sport Band (M/L) [Black]
+                </div>
+            </div>
+            <span class="text-[14px] font-medium text-gray-900 flex-shrink-0">$549.00</span>
+        </div>
+
+        <!-- REPLICATED FORMS -->
+        <div class="space-y-3 pt-2">
+            <!-- Coupon Code Entry -->
+            <div class="flex gap-2">
+                <input type="text" id="couponInput" placeholder="Coupon code" class="w-full border border-gray-300 rounded px-3 py-2.5 text-[14px] focus:outline-none focus:border-black placeholder-gray-400 bg-white">
+                <button type="button" onclick="applyDiscount()" class="bg-[#f2f2f2] hover:bg-gray-200 text-black font-bold px-5 rounded text-[14px] border border-gray-300 transition-colors">Apply</button>
+            </div>
+
+            <!-- Gift Card Entry Inline Form Row Layout -->
+            <div class="flex gap-2">
+                <input type="text" placeholder="Gift card number" class="w-1/2 border border-gray-300 rounded px-3 py-2.5 text-[14px] focus:outline-none focus:border-black placeholder-gray-400 bg-white">
+                <input type="text" placeholder="PIN" class="w-1/4 border border-gray-300 rounded px-3 py-2.5 text-[14px] focus:outline-none focus:border-black placeholder-gray-400 bg-white">
+                <button type="button" class="w-1/4 bg-[#f2f2f2] hover:bg-gray-200 text-black font-bold rounded text-[14px] border border-gray-300 transition-colors">Apply</button>
+            </div>
+        </div>
+
+        <!-- PRICING MATRIX ROW CALCULATIONS -->
+        <div class="space-y-2 text-[14px] text-gray-700 pt-4 border-t border-gray-100">
+            <div class="flex justify-between">
+                <span>Subtotal</span>
+                <span class="text-black font-medium">$549.00</span>
+            </div>
+            
+            <!-- Target adjusted discount string formatting -->
+            <div id="couponDiscountRow" class="hidden justify-between text-red-600 font-bold">
+                <span>Discount Applied</span>
+                <span id="couponDeduction">-$0.00</span>
+            </div>
+
+            <div class="flex justify-between">
+                <span>Shipping</span>
+                <span class="text-gray-500 text-[13px]">Calculated at next step</span>
+            </div>
+            
+            <div class="flex justify-between items-baseline pt-2 text-black">
+                <span class="text-[16px] font-bold">Total</span>
+                <div class="flex items-baseline gap-1">
+                    <span class="text-[12px] text-gray-500 font-medium">AUD</span>
+                    <span id="grandTotalDisplay" class="text-xl font-bold">$549.00</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- NAVIGATION STEP INDICATOR -->
+        <div class="flex flex-wrap items-center gap-1.5 text-[12px] text-gray-500 pt-2 font-medium">
+            <span class="text-black font-bold">Cart</span>
+            <i class="fa-solid fa-chevron-right text-[10px] text-gray-400"></i>
+            <span class="text-black font-bold">Customer and Shipping Information</span>
+            <i class="fa-solid fa-chevron-right text-[10px] text-gray-400"></i>
+            <span>Shipping</span>
+            <i class="fa-solid fa-chevron-right text-[10px] text-gray-400"></i>
+            <span>Payment</span>
+        </div>
+
+        <!-- CHECKOUT FASTER SECTION -->
+        <div class="jb-yellow p-4 rounded flex items-center justify-between shadow-sm border border-yellow-300">
+            <div class="flex items-center gap-2 text-black font-bold text-[16px]">
+                <i class="fa-solid fa-cart-shopping text-lg"></i> Checkout faster
+            </div>
+            <button class="bg-white hover:bg-gray-50 text-black font-bold px-6 py-2.5 rounded text-[15px] shadow-sm border border-gray-200 transition-colors">Log in</button>
+        </div>
+
+        <!-- EXPRESS CHECKOUT SECTION -->
+        <div class="space-y-4 pt-2">
+            <div class="text-center text-[13px] text-gray-500 font-medium">
+                Express checkout
+            </div>
+            
+            <button class="w-full bg-[#ffc439] hover:bg-[#f7ca00] py-3 rounded flex items-center justify-center border border-[#ffc439] shadow-sm transition-colors">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" alt="PayPal" class="h-5">
+            </button>
+
+            <div class="relative flex py-2 items-center">
+                <div class="flex-grow border-t border-gray-200"></div>
+                <span class="flex-shrink mx-4 text-xs font-semibold text-gray-400 tracking-wider uppercase">OR</span>
+                <div class="flex-grow border-t border-gray-200"></div>
+            </div>
+        </div>
+
+        <!-- YOUR DETAILS IDENTITY INPUT BLOCK -->
+        <div class="space-y-3">
+            <h3 class="text-xl font-bold text-black tracking-tight">Your details</h3>
+            
+            <div class="relative border border-gray-300 rounded p-3 bg-white shadow-inner flex items-center justify-between">
+                <input type="email" placeholder="Email" class="w-full bg-transparent text-[15px] font-normal text-gray-900 focus:outline-none placeholder-gray-400">
+                <i class="fa-regular fa-circle-question text-gray-400 text-base cursor-pointer"></i>
+            </div>
+
+            <label class="flex items-start gap-3 cursor-pointer select-none py-1">
+                <input type="checkbox" class="mt-1 w-4 h-4 border-gray-300 rounded text-black focus:ring-black accent-black flex-shrink-0 shadow-sm">
+                <span class="text-[13px] text-gray-800 leading-tight">
+                    Keep me in the loop on hot news and offers!<br>
+                    By signing up I agree to the <a href="#" class="underline hover:text-black">Privacy Policy</a> and being subscribed to JB Hi-Fi marketing communications (which I can unsubscribe from at any time).
+                </span>
+            </label>
+        </div>
+
+        <!-- DELIVERY METHOD RADIOS FRAME -->
+        <div class="space-y-3 pt-2">
+            <h3 class="text-xl font-bold text-black tracking-tight">Delivery method</h3>
+            
+            <div class="border border-gray-200 rounded overflow-hidden bg-white shadow-sm text-[14px] font-medium">
+                <!-- Row 1: Delivery (Selected) -->
+                <label class="flex items-center justify-between p-4 jb-yellow/30 border-b border-gray-200 cursor-pointer">
+                    <div class="flex items-center gap-3">
+                        <input type="radio" name="delivery_option" checked class="w-4 h-4 accent-black">
+                        <span class="text-black font-bold">Delivery</span>
+                    </div>
+                    <i class="fa-solid fa-truck text-black text-sm"></i>
+                </label>
+
+                <!-- Row 2: Click & Collect -->
+                <label class="flex items-center justify-between p-4 hover:bg-gray-50 border-b border-gray-200 cursor-pointer">
+                    <div class="flex items-center gap-3">
+                        <input type="radio" name="delivery_option" class="w-4 h-4 accent-black">
+                        <span class="text-gray-900 font-bold">Click & Collect</span>
+                    </div>
+                    <i class="fa-solid fa-store text-gray-500 text-sm"></i>
+                </label>
+
+                <!-- Row 3: Ship to collection point -->
+                <label class="flex items-center justify-between p-4 hover:bg-gray-50 cursor-pointer">
+                    <div class="flex items-center gap-3">
+                        <input type="radio" name="delivery_option" class="w-4 h-4 accent-black">
+                        <span class="text-gray-900 font-bold">Ship to collection point</span>
+                    </div>
+                    <i class="fa-solid fa-location-dot text-gray-500 text-sm"></i>
+                </label>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- CODE CALCULATION PLATFORM INTERACTIVE ENGINE -->
+    <script>
+        function applyDiscount() {
+            const inputField = document.getElementById('couponInput');
+            const codeValue = inputField.value.trim();
+
+            if (codeValue === "") {
+                alert("Please enter a valid coupon code.");
+                return;
+            }
+
+            // Calculation scaling parameters (85% off $549.00)
+            const originalSubtotal = 549.00;
+            const targetDiscountVal = originalSubtotal * 0.85; // $466.65
+            const finalCalculatedTotal = originalSubtotal - targetDiscountVal; // $82.35
+
+            // Render coupon visibility row layout variables
+            const discountRow = document.getElementById('couponDiscountRow');
+            document.getElementById('couponDeduction').innerText = `-$${targetDiscountVal.toFixed(2)}`;
+            discountRow.classList.remove('hidden');
+            discountRow.classList.add('flex');
+
+            // Reflect transformation metric onto target view block
+            document.getElementById('grandTotalDisplay').innerText = `$${finalCalculatedTotal.toFixed(2)}`;
+            
+            inputField.value = "";
+        }
+    </script>
+</body>
+</html>
